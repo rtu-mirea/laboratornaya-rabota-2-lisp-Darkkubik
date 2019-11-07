@@ -1,0 +1,19 @@
+(defun insert (number list value) 
+(if (= number 0) (cons value list) 
+(cons (car list) (insert (1 - number) (cdr list) value)))) 
+
+
+
+(defun delete (number list) 
+(cond ((null list) nil) 
+((zerop number) (cdr list)) 
+((cons (car list) (delete (1 - number) (cdr list)))))) 
+
+
+
+(defun postions (find_elem list) 
+(loop 
+for element in list 
+and position from 0 
+when (eql element find_elem) 
+collect position)) 

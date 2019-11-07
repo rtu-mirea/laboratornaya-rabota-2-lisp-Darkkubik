@@ -1,0 +1,21 @@
+(defun DeepDecompress (list) 
+(if (zerop (car list)) nil 
+(cons (second list) (DeepDecompress (list (1 - (car list)) (second list)))))) 
+
+(defun Decompress (list) 
+(cond ((null list) nil) 
+((atom (car list)) (cons (car list) (Decompress (cdr list)))) 
+((consp (car list)) (append (DeepDecompress (car list)) (Decompress (cdr list))) 
+))) 
+
+(defun CompareList (val acc) 
+(if (> acc 1) (list acc val) val)) 
+
+(defun Accum (val acc list) 
+(cond ((null list) (cons (CompareList val acc) nil)) 
+((eq val (car list)) (Accum val (1 + acc) (cdr list))) 
+(t (cons (CompareList val acc) (Accum (car list) 1 (cdr list)))))) 
+
+(defun Compress (list) 
+(cond ((null (cdr list)) '()) 
+(t (Accum (car list) 1 (cdr list))))))
